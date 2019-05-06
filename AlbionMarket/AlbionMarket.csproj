@@ -6,11 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ItemsOfInterest.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Items.json">
+    <None Update="JsonFiles\Items.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="JsonFiles\ItemsOfInterest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

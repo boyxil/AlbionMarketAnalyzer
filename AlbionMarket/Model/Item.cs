@@ -1,11 +1,12 @@
 ﻿namespace AlbionMarket.Model
 {
-	class Item
+	public class Item
 	{
-		string Name;
-		string LocalizationName;
-		string AveragePrice;
-		string UniqueName;
-		Locations Locations;
+		public string Name;
+		public decimal Revenue;
+		public string UniqueName;
+		public Location Locations;
+		public decimal SellPrice;
+		public decimal BuyPrice;
 	}
 }

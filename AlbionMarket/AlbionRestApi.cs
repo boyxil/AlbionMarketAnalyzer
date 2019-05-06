@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using AlbionMarket.Model;
 using Newtonsoft.Json;
+using AlbionMarket.CustomJsonConverter;
 
 namespace AlbionMarket {
 	public static class AlbionRestApi
@@ -55,7 +56,7 @@ namespace AlbionMarket {
 		public static IEnumerable<ItemPriceJson> GetItemPrices(IEnumerable<string> items, IEnumerable<Location> locations = null)
 		{
 			string response = GetPrices(items.ToArray(), locations.ToArray());
-			var itemPrices = JsonConvert.DeserializeObject<IEnumerable<ItemPriceJson>>(response);
+			var itemPrices = JsonConvert.DeserializeObject<IEnumerable<ItemPriceJson>>(response,new ItemPriceJsonConverter());
 			return itemPrices;
 		}
 	}

@@ -56,7 +56,7 @@ namespace AlbionMarket {
 		public static IEnumerable<ItemPriceJson> GetItemPrices(IEnumerable<string> items, IEnumerable<Location> locations = null)
 		{
 			string response = GetPrices(items.ToArray(), locations.ToArray());
-			var itemPrices = JsonConvert.DeserializeObject<IEnumerable<ItemPriceJson>>(response,new ItemPriceJsonConverter());
+			var itemPrices = JsonConvert.DeserializeObject<List<ItemPriceJson>>(response,new ItemPriceJsonConverter());
 			return itemPrices;
 		}
 	}

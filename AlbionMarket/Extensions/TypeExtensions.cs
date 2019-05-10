@@ -22,7 +22,16 @@ namespace AlbionMarket.Extensions
 			return result;
 		}
 
-		public static PropertyInfo GetProperty(this Type type, string name) => type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance)
+		public static object GetDefault(this Type type)
+		{
+			if (type.IsValueType || type.IsEnum)
+			{
+				return Activator.CreateInstance(type);
+			}
+			return null;
+		}
+
+		public static PropertyInfo GetProperty(this Type type, string name) => type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
 	}
 
 	public class VariableNames

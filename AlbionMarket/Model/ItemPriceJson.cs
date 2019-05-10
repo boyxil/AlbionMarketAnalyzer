@@ -29,6 +29,6 @@ namespace AlbionMarket.Model
 		public decimal BuyPriceMax { get; set; }
 		[JsonProperty("buy_price_max_date")]
 		public string ButPriceMaxDate { get; set; }
-		public decimal Revenue => BuyPriceMin > 0 ? ((SellPriceMin - BuyPriceMin) * 100) / SellPriceMin : 0;
+		public decimal Revenue => BuyPriceMin > 0 && SellPriceMin > 0 ? ((SellPriceMin - BuyPriceMin) * 100) / SellPriceMin : 0;
 	}
 }

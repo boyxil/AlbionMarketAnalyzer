@@ -23,8 +23,12 @@ namespace AlbionMarket.CustomJsonConverter
 				{
 					reader.Read();
 					var value = reader.Value;
-					var currentValue = item.GetType().GetProperty(name.Name).GetValue(item);
-					if (currentValue == default(typeof(value)))
+					Type type = item.GetType().GetProperty(name.Name).PropertyType;
+
+					var currentValue = Activator.CreateInstance(objectType);
+					currentValue = item.GetType().GetProperty(name.Name).GetValue(item);
+
+					if (currentValue == type.GetDefault())
 						item.GetType().GetProperty(name.Name).SetValue(item, value);
 					else
 					{

@@ -4,6 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Reflection;
+using AlbionMarket.Model;
 
 namespace AlbionMarket.Extensions
 {
@@ -22,14 +23,22 @@ namespace AlbionMarket.Extensions
 			return result;
 		}
 
-		public static object GetDefault(this Type type)
+		public static dynamic GetValue(this Type type, string value = null)
 		{
-			if (type.IsValueType || type.IsEnum)
-			{
+			value = value?.Replace(" ", "");
+			if (value != null && type.IsEnum)
+				return Enum.Parse(type, value);
+			if (value != null)
+				return Convert.ChangeType(value, type);
+			if (type.IsValueType)
 				return Activator.CreateInstance(type);
-			}
 			return null;
 		}
+
+		//public static T CreateIstance<T>(this PropertyInfo property, string value)
+		//{
+		//	var a = Activator.CreateInstance(objectType);
+		//}
 
 		public static PropertyInfo GetProperty(this Type type, string name) => type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
 	}

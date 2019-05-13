@@ -18,6 +18,7 @@ namespace AlbionMarket.Model
 
 	public enum Location
 	{
+		Null,
 		Caerleon,
 		Thetford,
 		BlackMarket,

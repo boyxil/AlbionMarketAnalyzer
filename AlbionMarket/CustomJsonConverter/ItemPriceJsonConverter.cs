@@ -9,11 +9,12 @@ using System.Reflection;
 
 namespace AlbionMarket.CustomJsonConverter
 {
-	class ItemPriceJsonConverter : JsonConverter<List<ItemPriceJson>>
+	public class ItemPriceJsonConverter : JsonConverter<List<ItemPriceJson>>
 	{
 		public override List<ItemPriceJson> ReadJson(JsonReader reader, Type objectType, List<ItemPriceJson> existingValue, bool hasExistingValue, JsonSerializer serializer)
 		{
 			var names = objectType.GenericTypeArguments[0].GetJsonPropertyAtrribut();
+			List<ItemPriceJson> result = new List<ItemPriceJson>();
 			var item = new ItemPriceJson();
 			while (reader.Read())
 			{
@@ -22,23 +23,23 @@ namespace AlbionMarket.CustomJsonConverter
 				if (name != null)
 				{
 					reader.Read();
-					var value = reader.Value;
 					Type type = item.GetType().GetProperty(name.Name).PropertyType;
 
-					var currentValue = Activator.CreateInstance(objectType);
-					currentValue = item.GetType().GetProperty(name.Name).GetValue(item);
+					var value = type.GetValue(reader.Value.ToString().Trim());
 
-					if (currentValue == type.GetDefault())
+					var currentValue = item.GetType().GetProperty(name.Name).GetValue(item);
+
+					if (currentValue == null || (currentValue.Equals(type.GetValue())))
 						item.GetType().GetProperty(name.Name).SetValue(item, value);
 					else
 					{
-						existingValue.Add(item);
+						result.Add(item);
 						item = new ItemPriceJson();
 						item.GetType().GetProperty(name.Name).SetValue(item, value);
 					}
 				}
 			}
-			return null;
+			return result;
 		}
 
 		public override void WriteJson(JsonWriter writer, List<ItemPriceJson> value, JsonSerializer serializer)

@@ -41,7 +41,7 @@ namespace AlbionMarket {
 
 			string locationsUrl = locations != null ? $"{locations[0]}" : string.Empty;
 			for (int i = 1; i < locations?.Length; i++)
-				itemsUrl += $"%C{locations[i]}";
+				locationsUrl += $"%2C{locations[i]}";
 
 			url = String.Format(url, new string[] { itemsUrl, locationsUrl });
 			return client.GetStringAsync(url).Result;
@@ -58,6 +58,22 @@ namespace AlbionMarket {
 			string response = GetPrices(items.ToArray(), locations.ToArray());
 			var itemPrices = JsonConvert.DeserializeObject<List<ItemPriceJson>>(response, new ItemPriceJsonConverter());
 			return itemPrices;
+		}
+
+		/// <summary>
+		/// Gets a json which describes a price changes of a particular item in particular location
+		/// </summary>
+		/// <param name="itemName">Item of interest</param>
+		/// <param name="location">Location of interest</param>
+		/// <param name="date">Date of interest</param>
+		/// <returns></returns>
+		public static ItemChartJson GetItemChart(string itemName, Location location, DateTime date)
+		{
+			string url = "https://www.albion-online-data.com/api/v1/stats/Charts/{0}?locations={1}&date={2}";
+			string dateFormated = $"{date.Month}%2F{date.Day}%2F{date.Year}";
+			url = String.Format(url, itemName, location, dateFormated);
+			var response = client.GetStringAsync(url).Result;
+			return JsonConvert.DeserializeObject<IEnumerable<ItemChartJson>>(response).First();
 		}
 	}
 }

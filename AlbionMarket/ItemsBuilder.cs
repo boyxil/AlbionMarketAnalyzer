@@ -51,7 +51,7 @@ namespace AlbionMarket
 		//Not the best solution, because this function every time is casted, reads a files content
 		private static IEnumerable<string> GetItemsNames()
 		{
-			string fileContent = File.ReadAllText("JsonFiles/ItemsOfInterest.json");
+			string fileContent = File.ReadAllText("JsonFiles/ItemOfInterest2.json");
 			var itemsNames = JsonConvert.DeserializeObject<List<string>>(fileContent);
 
 			foreach (var itemName in itemsNames)
@@ -70,7 +70,7 @@ namespace AlbionMarket
 					Locations = itemPrice.Location,
 					UniqueName = itemPrice.UniqueName,
 					Revenue = itemPrice.Revenue,
-					BuyPrice = itemPrice.BuyPriceMin,
+					BuyPrice = itemPrice.BuyPriceMax,
 					SellPrice = itemPrice.SellPriceMin
 				});
 			}

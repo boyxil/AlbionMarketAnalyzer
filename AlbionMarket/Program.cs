@@ -59,12 +59,13 @@ namespace AlbionMarket
 					for (int i = 0; i < days; i++)
 					{
 						var date = todayDate.Date - TimeSpan.FromDays(i);
-						var itemPrices = AlbionRestApi.GetItemChart(item.UniqueName, item.Locations, date);
+						var itemPrices = AlbionDataProjectRestApi.GetItemChart(item.UniqueName, item.Locations, date);
 						itemPrices.data.PriceMin.Sort();
 						prices.Add(itemPrices.data.PriceMin[itemPrices.data.PriceMin.Count() / 2]);
 					}
 					var averagePrice = prices.Sum() / prices.Count();
-					string output = $"Buy {item.Name} in {item.Locations} for price: {averagePrice} \n";
+					var buyPrice = averagePrice * (decimal)1.17;
+					string output = $"Buy {item.Name} in {item.Locations} for price: {averagePrice} sell for {buyPrice} \n";
 					fileStream.Write(new UTF8Encoding(true).GetBytes(output));
 					Console.WriteLine(output);
 				}
@@ -84,7 +85,7 @@ namespace AlbionMarket
 
 		public static void UpdateItemsFile()
 		{
-			var a = AlbionRestApi.GetItems();
+			var a = AlbionDataProjectRestApi.GetItems();
 			File.WriteAllText("Items.json", a);
 		}
 	}

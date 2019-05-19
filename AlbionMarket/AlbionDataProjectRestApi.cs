@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using AlbionMarket.CustomJsonConverter;
 
 namespace AlbionMarket {
-	public static class AlbionRestApi
+	public static class AlbionDataProjectRestApi
 	{
 		private static readonly HttpClient client = new HttpClient();
 

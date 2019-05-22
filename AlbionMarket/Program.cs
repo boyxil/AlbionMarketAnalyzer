@@ -4,6 +4,8 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace AlbionMarket
 {
@@ -11,7 +13,9 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			LongTermInvestments();
+			FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
+			XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
+			ItemsRawXml itemsRawXml = (ItemsRawXml) xmlSerializer.Deserialize(myFileStream);
 		}
 
 		public static void BlackMarketRevenue()

@@ -48,6 +48,7 @@ namespace AlbionMarket
 			int days = 7;
 			DateTime todayDate = DateTime.Now;
 			var location = Location.Caerleon;
+			decimal revenue = 0.20M;
 
 			//Action
 			using (var fileStream = File.Create($"C:/AlbionHistory/{location}{todayDate.ToString("dd_MM_yyyy")}.txt"))
@@ -63,8 +64,8 @@ namespace AlbionMarket
 						itemPrices.data.PriceMin.Sort();
 						prices.Add(itemPrices.data.PriceMin[itemPrices.data.PriceMin.Count() / 2]);
 					}
-					var averagePrice = prices.Sum() / prices.Count();
-					var buyPrice = averagePrice * (decimal)1.17;
+					var averagePrice = Math.Round(prices.Sum() / prices.Count()) * (1 - (revenue / 3));
+					var buyPrice = Math.Round(averagePrice * (1 + (revenue * 2 / 3)));
 					string output = $"Buy {item.Name} in {item.Locations} for price: {averagePrice} sell for {buyPrice} \n";
 					fileStream.Write(new UTF8Encoding(true).GetBytes(output));
 					Console.WriteLine(output);

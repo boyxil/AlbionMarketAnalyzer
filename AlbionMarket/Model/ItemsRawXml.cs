@@ -4,14 +4,14 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using System.Linq;
 
 namespace AlbionMarket.Model
 {
 	[XmlRoot("items")]
 	public class ItemsRawXml : IXmlSerializable
 	{
-		[XmlAnyElementAttribute]
-		public ItemRawXml[] Items;
+		public IEnumerable<ItemRawXml> Items = new List<ItemRawXml>();
 
 		public XmlSchema GetSchema()
 		{
@@ -20,7 +20,16 @@ namespace AlbionMarket.Model
 
 		public void ReadXml(XmlReader reader)
 		{
-			throw new NotImplementedException();
+			List<ItemRawXml> result = new List<ItemRawXml>();
+			while (reader.Read())
+			{
+				if(reader.Name == "farmableitem")
+				{
+					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemRawXml));
+					result.Add((ItemRawXml)xmlSerializer.Deserialize(reader));
+				}
+			}
+			Items = result;
 		}
 
 		public void WriteXml(XmlWriter writer)
@@ -29,6 +38,7 @@ namespace AlbionMarket.Model
 		}
 	}
 
+	[XmlRoot("farmableitem")]
 	public class ItemRawXml
 	{
 		//uniquename//

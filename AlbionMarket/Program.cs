@@ -13,9 +13,10 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
-			XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
-			ItemsRawXml itemsRawXml = (ItemsRawXml) xmlSerializer.Deserialize(myFileStream);
+			LongTermInvestments();
+			//FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
+			//XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
+			//ItemsRawXml itemsRawXml = (ItemsRawXml) xmlSerializer.Deserialize(myFileStream);
 		}
 
 		public static void BlackMarketRevenue()
@@ -52,6 +53,7 @@ namespace AlbionMarket
 			int days = 7;
 			DateTime todayDate = DateTime.Now;
 			var location = Location.Caerleon;
+			decimal revenue = 0.16M;
 
 			//Action
 			using (var fileStream = File.Create($"C:/AlbionHistory/{location}{todayDate.ToString("dd_MM_yyyy")}.txt"))
@@ -65,10 +67,10 @@ namespace AlbionMarket
 						var date = todayDate.Date - TimeSpan.FromDays(i);
 						var itemPrices = AlbionDataProjectRestApi.GetItemChart(item.UniqueName, item.Locations, date);
 						itemPrices.data.PriceMin.Sort();
-						prices.Add(itemPrices.data.PriceMin[itemPrices.data.PriceMin.Count() / 2]);
+						prices.Add(itemPrices.data.PriceMin[itemPrices.data.PriceMin.Count() / 3]);
 					}
-					var averagePrice = prices.Sum() / prices.Count();
-					var buyPrice = averagePrice * (decimal)1.17;
+					var averagePrice = Math.Round(prices.Sum() / prices.Count());/*Math.Round(prices.Sum() / prices.Count()) * (1 - (revenue / 3));*/
+					var buyPrice = Math.Round(averagePrice * (1 + (revenue /** 2 / 3*/)));
 					string output = $"Buy {item.Name} in {item.Locations} for price: {averagePrice} sell for {buyPrice} \n";
 					fileStream.Write(new UTF8Encoding(true).GetBytes(output));
 					Console.WriteLine(output);

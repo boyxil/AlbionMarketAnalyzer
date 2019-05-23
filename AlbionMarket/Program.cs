@@ -13,10 +13,10 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			LongTermInvestments();
-			//FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
-			//XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
-			//ItemsRawXml itemsRawXml = (ItemsRawXml) xmlSerializer.Deserialize(myFileStream);
+			//LongTermInvestments();
+			FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
+			XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
+			ItemsRawXml itemsRawXml = (ItemsRawXml)xmlSerializer.Deserialize(myFileStream);
 		}
 
 		public static void BlackMarketRevenue()

@@ -4,16 +4,23 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Xml;
 using AlbionMarket.Model;
+using System.Reflection;
+using System.Linq;
 
 namespace AlbionMarket.Extensions
 {
 	public static class XmlReaderExtensions
 	{
-		/// TODO: Use reflection to retrieve a name of a variable
-		public static IEnumerable<T> GetListOf<T>(this XmlReader reader, string name)
+		public static IEnumerable<T> GetListOf<T>(this XmlReader reader)
 		{
 			var result = new List<T>();
-			while (reader.Name == name)
+			Type type = typeof(T);
+
+			var classAttribute =
+				type.CustomAttributes?.FirstOrDefault(a => a.AttributeType == typeof(System.Xml.Serialization.XmlRootAttribute))
+				?.ConstructorArguments?.FirstOrDefault().Value.ToString() ?? type.Name.ToString();
+
+			while (reader.Name == classAttribute)
 			{
 				var a = reader.ReadOuterXml();
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
@@ -26,7 +33,7 @@ namespace AlbionMarket.Extensions
 		{
 			try
 			{
-				while (reader.AttributeCount == 0)
+				while (reader.AttributeCount == 0 && reader.Value != string.Empty)
 					reader.Skip();
 			}
 			catch { return false; }

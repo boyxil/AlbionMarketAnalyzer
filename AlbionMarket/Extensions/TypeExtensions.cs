@@ -35,11 +35,6 @@ namespace AlbionMarket.Extensions
 			return null;
 		}
 
-		//public static T CreateIstance<T>(this PropertyInfo property, string value)
-		//{
-		//	var a = Activator.CreateInstance(objectType);
-		//}
-
 		public static PropertyInfo GetProperty(this Type type, string name) => type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
 	}
 

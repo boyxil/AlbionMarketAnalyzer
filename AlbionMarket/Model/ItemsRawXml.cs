@@ -5,6 +5,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Linq;
+using AlbionMarket.Extensions;
 
 namespace AlbionMarket.Model
 {
@@ -23,11 +24,8 @@ namespace AlbionMarket.Model
 			List<ItemRawXml> result = new List<ItemRawXml>();
 			while (reader.Read())
 			{
-				if(reader.Name == "farmableitem")
-				{
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemRawXml));
-					result.Add((ItemRawXml)xmlSerializer.Deserialize(reader));
-				}
+				if (reader.Name == "farmableitem")
+					result.AddRange(reader.GetListOf<ItemRawXml>("farmableitem"));
 			}
 			Items = result;
 		}

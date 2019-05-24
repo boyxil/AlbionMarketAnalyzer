@@ -22,28 +22,31 @@ namespace AlbionMarket.Model
 
 		public void ReadXml(XmlReader reader)
 		{
+			reader.Read();
 			List<ItemRawXml> result = new List<ItemRawXml>();
 
-			while (reader.Read())
+			while (!reader.EOF)
 			{
-				if (reader.Name == "farmableitem")
-					result.AddRange(reader.GetListOf<FarmableItemXml>());
-				else if (reader.Name == "simpleitem")
-					result.AddRange(reader.GetListOf<SimpleItemXml>());
-				else if (reader.Name == "consumableitem")
-					result.AddRange(reader.GetListOf<ConsumableItemXml>());
-				else if (reader.Name == "equipmentitem")
-					result.AddRange(reader.GetListOf<EquipmentItemXml>());
-				else if (reader.Name == "weapon")
-					result.AddRange(reader.GetListOf<WeaponXml>());
-				else if (reader.Name == "mount")
-					result.AddRange(reader.GetListOf<MountXml>());
-				else if (reader.Name == "furnitureitem")
-					result.AddRange(reader.GetListOf<FurnitureItemXml>());
-				else if (reader.Name == "journalitem")
-					result.AddRange(reader.GetListOf<JournalItemXml>());
-				else if (reader.Name == "consumablefrominventoryitem")
-					result.AddRange(reader.GetListOf<ConsumableFromInventoryItemXml>());
+				string name = reader.Name;
+				string xmlNode = reader.ReadOuterXml();
+				if (name == "farmableitem")
+					result.Add(xmlNode.SerializeXmlToObject<FarmableItemXml>());
+				else if (name == "simpleitem")
+					result.Add(xmlNode.SerializeXmlToObject<SimpleItemXml>());
+				else if (name == "consumableitem")
+					result.Add(xmlNode.SerializeXmlToObject<ConsumableItemXml>());
+				else if (name == "equipmentitem")
+					result.Add(xmlNode.SerializeXmlToObject<EquipmentItemXml>());
+				else if (name == "weapon")
+					result.Add(xmlNode.SerializeXmlToObject<WeaponXml>());
+				else if (name == "mount")
+					result.Add(xmlNode.SerializeXmlToObject<MountXml>());
+				else if (name == "furnitureitem")
+					result.Add(xmlNode.SerializeXmlToObject<FurnitureItemXml>());
+				else if (name == "journalitem")
+					result.Add(xmlNode.SerializeXmlToObject<JournalItemXml>());
+				else if (name == "consumablefrominventoryitem")
+					result.Add(xmlNode.SerializeXmlToObject<ConsumableFromInventoryItemXml>());
 			}
 			Items = result;
 		}

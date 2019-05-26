@@ -24,6 +24,14 @@ namespace AlbionMarket
 			var itemsPrices = AlbionDataProjectRestApi.GetItemPrices(rawItems.Select(e => e.UniqueName).ToArray(), locations);
 			return AggregateItems(rawItems, itemsPrices);
 		}
+
+		public static IEnumerable<Item> GetItems(string itemNames, Location[] locations = null, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
+		{
+			var itemsNames = GetItemsNames();
+			var rawItems = GetRawItems(itemsNames, expectTirs, expectEnchantemts);
+			var itemsPrices = AlbionDataProjectRestApi.GetItemPrices(rawItems.Select(e => e.UniqueName).ToArray(), locations);
+			return AggregateItems(rawItems, itemsPrices);
+		}
 		//Not the best solution, because this function every time is casted, reads a files content
 		private static IEnumerable<ItemRawJson> GetRawItems(IEnumerable<string> itemsNames, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
 		{

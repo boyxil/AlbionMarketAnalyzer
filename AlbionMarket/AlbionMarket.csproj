@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <None Remove="ItemsOfInterest.json" />
+    <None Remove="XmlFiles\localization.xml~RF15927f66.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="XmlFiles\items.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="XmlFiles\localization.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

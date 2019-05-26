@@ -14,9 +14,24 @@ namespace AlbionMarket
 		static void Main(string[] args)
 		{
 			//LongTermInvestments();
-			FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
-			XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
-			ItemsRawXml itemsRawXml = (ItemsRawXml)xmlSerializer.Deserialize(myFileStream);
+			SerializeItemsFromItemsXlm();
+		}
+
+		public static void SerializeItemsFromItemsXlm()
+		{
+			//FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
+			//XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
+			//ItemsRawXml itemsRawXml = (ItemsRawXml)xmlSerializer.Deserialize(myFileStream);
+
+			FileStream myFileStream2 = new FileStream("XmlFiles/localization.xml", FileMode.Open);
+			XmlSerializer xmlSerializer2 = new XmlSerializer(typeof(LocalizationXmls));
+			LocalizationXmls itemsRawXml2 = (LocalizationXmls)xmlSerializer2.Deserialize(myFileStream2);
+		}
+
+		public static void Hauling()
+		{
+			var location = new Location[] { Location.BlackMarket, Location.Caerleon };
+			var items = ItemsBuilder.GetItems(location);
 		}
 
 		public static void BlackMarketRevenue()

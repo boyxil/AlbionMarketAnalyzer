@@ -6,16 +6,20 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using AlbionMarket.Extensions;
 using System.Xml.Linq;
+using System.Data.Entity;
+using AlbionMarket.Model;
 
 namespace AlbionMarket.Model
 {
-	public class LocalizationXmls: IXmlSerializable
-	{
-		public LocalizationXml[] Localizations { get; set; }
+	[XmlRoot("tmx")]
+	public class LocalizationXmls : IXmlSerializable	{
+		[XmlArray("body")]
+		[XmlArrayItem("tu")]
+		public Localization[] Localizations { get; set; }
 
 		public void ReadXml(XmlReader reader)
 		{
-			List<LocalizationXml> result = new List<LocalizationXml>();
+			List<Localization> result = new List<Localization>();
 
 			while (!reader.EOF)
 			{
@@ -23,7 +27,7 @@ namespace AlbionMarket.Model
 				if (name == "tu")
 				{
 					XElement localization = XElement.Parse(reader.ReadOuterXml());
-					var item = localization.ToString().SerializeXmlToObject<LocalizationXml>();
+					var item = localization.ToString().SerializeXmlToObject<Localization>();
 					var elements = localization.Elements("tuv");
 					var descriptions = new List<Description>();
 					foreach (var element in elements)
@@ -48,21 +52,4 @@ namespace AlbionMarket.Model
 		}
 	}
 
-	[XmlRoot("tu")]
-	public class LocalizationXml
-	{
-		[XmlAttribute("tuid")]
-		public string UniqueName { get; set;}
-		[XmlArrayItem("tuv")]
-		public Description[] Descriptions { get; set; }
-	}
-
-	[XmlRoot("tuv")]
-	public class Description
-	{
-		[XmlAttribute("xml:lang")]
-		public string Language { get; set; }
-		[XmlElement("seg")]
-		public string DescriptionText { get; set; }
-	}
 }

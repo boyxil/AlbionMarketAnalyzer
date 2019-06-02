@@ -53,8 +53,8 @@ namespace AlbionMarket {
 					maximumPrice = maximumPriceOfDay > maximumPrice ? maximumPriceOfDay : maximumPrice;
 				}
 			}
-			var averagePrice = Math.Round(prices.Sum() / prices.Count());
-			decimal totalRevenue = ((maximumPrice - averagePrice) * 100) / averagePrice;
+			var averagePrice = Math.Round(prices.Sum() / (prices.Count() > 0 ? prices.Count() : 1));
+			decimal totalRevenue = ((maximumPrice - averagePrice) * 100) / (averagePrice > 0 ? averagePrice : 1);
 			return new { name = itemRawJson.LocalizedNames.First().Value, location = location, averagePrice = averagePrice, maximumPrice = maximumPrice, totalRevenue = totalRevenue };
 		}
 	}

@@ -14,8 +14,9 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			//LongTermInvestments();
-			UpDataBase();
+			//ItemsToBuy();
+			LongTermInvestments.Run(Location.Caerleon, DateTime.Now- TimeSpan.FromDays(1));
+			//UpDataBase();
 		}
 
 		public static void UpDataBase()
@@ -67,40 +68,9 @@ namespace AlbionMarket
 				Console.WriteLine($"{item.Name} ID: {item.UniqueName} Sell: {item.SellPrice}  Buy: {item.BuyPrice}, Revenue {item.Revenue}");
 		}
 
-		public static void LongTermInvestments()
-		{
-			//Configuration
-			int days = 7;
-			DateTime todayDate = DateTime.Now;
-			var location = Location.Caerleon;
-			decimal revenue = 0.16M;
-
-			//Action
-			using (var fileStream = File.Create($"C:/AlbionHistory/{location}{todayDate.ToString("dd_MM_yyyy")}.txt"))
-			{
-				var items = ItemsBuilder.GetItems(new Location[] { location });
-				foreach (var item in items)
-				{
-					List<decimal> prices = new List<decimal>();
-					for (int i = 0; i < days; i++)
-					{
-						var date = todayDate.Date - TimeSpan.FromDays(i);
-						var itemPrices = AlbionDataProjectRestApi.GetItemChart(item.UniqueName, item.Locations, date);
-						itemPrices.data.PriceMin.Sort();
-						prices.Add(itemPrices.data.PriceMin[itemPrices.data.PriceMin.Count() / 3]);
-					}
-					var averagePrice = Math.Round(prices.Sum() / prices.Count());/*Math.Round(prices.Sum() / prices.Count()) * (1 - (revenue / 3));*/
-					var buyPrice = Math.Round(averagePrice * (1 + (revenue /** 2 / 3*/)));
-					string output = $"Buy {item.Name} in {item.Locations} for price: {averagePrice} sell for {buyPrice} \n";
-					fileStream.Write(new UTF8Encoding(true).GetBytes(output));
-					Console.WriteLine(output);
-				}
-			}
-		}
-
 		public static void ItemsToBuy()
 		{
-			var location = new Location[] { Location.BlackMarket };
+			var location = new Location[] { Location.Caerleon };
 			var expectTires = new ItemTire[] { ItemTire.T1, ItemTire.T2, ItemTire.T3 };
 			var expectEnchantment = new string[] { "2", "3" };
 			var items = ItemsBuilder.GetItems(location, expectTires, expectEnchantment);

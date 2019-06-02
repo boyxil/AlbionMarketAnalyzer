@@ -19,7 +19,7 @@ namespace AlbionMarket
 
 		public static IEnumerable<Item> GetItems(Location[] locations = null, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
 		{
-			var itemsNames = GetItemsNames();
+			var itemsNames = GetItemsNames("JsonFiles/ItemsOfInterest2.json");
 			var rawItems = GetRawItems(itemsNames, expectTirs, expectEnchantemts);
 			var itemsPrices = AlbionDataProjectRestApi.GetItemPrices(rawItems.Select(e => e.UniqueName).ToArray(), locations);
 			return AggregateItems(rawItems, itemsPrices);
@@ -27,13 +27,13 @@ namespace AlbionMarket
 
 		public static IEnumerable<Item> GetItems(string itemNames, Location[] locations = null, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
 		{
-			var itemsNames = GetItemsNames();
+			var itemsNames = GetItemsNames("JsonFiles/ItemsOfInterest2.json");
 			var rawItems = GetRawItems(itemsNames, expectTirs, expectEnchantemts);
 			var itemsPrices = AlbionDataProjectRestApi.GetItemPrices(rawItems.Select(e => e.UniqueName).ToArray(), locations);
 			return AggregateItems(rawItems, itemsPrices);
 		}
 		//Not the best solution, because this function every time is casted, reads a files content
-		private static IEnumerable<ItemRawJson> GetRawItems(IEnumerable<string> itemsNames, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
+		public static IEnumerable<ItemRawJson> GetRawItems(IEnumerable<string> itemsNames, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
 		{
 			string fileContent = File.ReadAllText("JsonFiles/Items.json");
 			List<ItemRawJson> items = JsonConvert.DeserializeObject<IEnumerable<ItemRawJson>>(fileContent).ToList();
@@ -57,9 +57,9 @@ namespace AlbionMarket
 		}
 
 		//Not the best solution, because this function every time is casted, reads a files content
-		private static IEnumerable<string> GetItemsNames()
+		public static IEnumerable<string> GetItemsNames(string filePth)
 		{
-			string fileContent = File.ReadAllText("JsonFiles/ItemOfInterest2.json");
+			string fileContent = File.ReadAllText(filePth);
 			var itemsNames = JsonConvert.DeserializeObject<List<string>>(fileContent);
 
 			foreach (var itemName in itemsNames)

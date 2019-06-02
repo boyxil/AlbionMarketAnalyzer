@@ -73,7 +73,7 @@ namespace AlbionMarket {
 			string dateFormated = $"{date.Month}%2F{date.Day}%2F{date.Year}";
 			url = String.Format(url, itemName, location, dateFormated);
 			var response = client.GetStringAsync(url).Result;
-			return JsonConvert.DeserializeObject<IEnumerable<ItemChartJson>>(response).First();
+			return JsonConvert.DeserializeObject<IEnumerable<ItemChartJson>>(response).FirstOrDefault();
 		}
 	}
 }

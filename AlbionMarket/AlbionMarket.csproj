@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="JsonFiles\ItemOfInterest2.json">
+    <None Update="JsonFiles\ItemsOfInterest2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="JsonFiles\Items.json">

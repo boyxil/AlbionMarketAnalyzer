@@ -15,8 +15,8 @@ namespace AlbionMarket
 		static void Main(string[] args)
 		{
 			//ItemsToBuy();
-			LongTermInvestments.Run(Location.Caerleon, DateTime.Now- TimeSpan.FromDays(1));
-			//UpDataBase();
+			//LongTermInvestments.Run(Location.Caerleon, DateTime.Now- TimeSpan.FromDays(1));
+			UpDataBase();
 		}
 
 		public static void UpDataBase()
@@ -30,8 +30,11 @@ namespace AlbionMarket
 			LocalizationXmls itemsRawXml2 = (LocalizationXmls)xmlSerializer2.Deserialize(myFileStream2);
 
 
-			var db = new LocalizationContext();
-			db.Localizations.Add(itemsRawXml2.Localizations.First());
+			using (var db = new LocalizationContext())
+			{
+				///https://docs.microsoft.com/pl-pl/ef/ef6/fundamentals/configuring/config-file
+				db.Localizations.Add(itemsRawXml2.Localizations.First());
+			}
 		}
 
 		public static void Hauling()

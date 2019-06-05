@@ -7,6 +7,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Xml.Linq;
 using AlbionMarket.Model.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlbionMarket
 {
@@ -32,7 +33,7 @@ namespace AlbionMarket
 
 			using (var db = new LocalizationContext())
 			{
-				///https://docs.microsoft.com/pl-pl/ef/ef6/fundamentals/configuring/config-file
+				///https://docs.microsoft.com/pl-pl/ef/core/
 				db.Localizations.Add(itemsRawXml2.Localizations.First());
 			}
 		}

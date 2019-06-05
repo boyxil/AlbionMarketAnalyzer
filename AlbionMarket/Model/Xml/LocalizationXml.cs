@@ -6,7 +6,6 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using AlbionMarket.Extensions;
 using System.Xml.Linq;
-using System.Data.Entity;
 using AlbionMarket.Model;
 
 namespace AlbionMarket.Model

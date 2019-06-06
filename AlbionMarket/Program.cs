@@ -35,6 +35,8 @@ namespace AlbionMarket
 			{
 				///https://docs.microsoft.com/pl-pl/ef/core/
 				db.Localizations.Add(itemsRawXml2.Localizations.First());
+
+				var a = db.Localizations.First();
 			}
 		}
 

@@ -31,7 +31,7 @@ namespace AlbionMarket.Model
 					var descriptions = new List<Description>();
 					foreach (var element in elements)
 						descriptions.Add(element.ToString().SerializeXmlToObject<Description>());
-					item.Descriptions = descriptions.ToArray();
+					item.Descriptions = descriptions;
 					result.Add(item);
 				}
 				else

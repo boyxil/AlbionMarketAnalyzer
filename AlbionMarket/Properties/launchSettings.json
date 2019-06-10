@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AlbionMarket": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Jakub_Grenz\\source\\repos\\AlbionMarketAnalyzer\\AlbionMarket"
+    }
+  }
+}

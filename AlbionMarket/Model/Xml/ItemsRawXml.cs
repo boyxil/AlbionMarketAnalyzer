@@ -6,6 +6,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Linq;
 using AlbionMarket.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlbionMarket.Model
 {
@@ -59,6 +60,8 @@ namespace AlbionMarket.Model
 
 	public class ItemRawXml
 	{
+		[Key]
+		public int Id { get; set; }
 		[XmlAttribute("uniquename")]
 		public string UniqueName { get; set; }
 		[XmlAttribute("shopcategory")]

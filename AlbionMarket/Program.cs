@@ -18,33 +18,7 @@ namespace AlbionMarket
 		{
 			//ItemsToBuy();
 			//LongTermInvestments.Run(Location.Caerleon, DateTime.Now- TimeSpan.FromDays(1));
-			UpDataBase();
-		}
-
-		public static void UpDataBase()
-		{
-			//FileStream myFileStream = new FileStream("XmlFiles/items.xml", FileMode.Open);
-			//XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemsRawXml));
-			//ItemsRawXml itemsRawXml = (ItemsRawXml)xmlSerializer.Deserialize(myFileStream);
-
-			FileStream myFileStream2 = new FileStream("XmlFiles/localization.xml", FileMode.Open);
-			XmlSerializer xmlSerializer2 = new XmlSerializer(typeof(LocalizationXmls));
-			LocalizationXmls itemsRawXml2 = (LocalizationXmls)xmlSerializer2.Deserialize(myFileStream2);
-
-
-			using (var db = new LocalizationContext())
-			{
-				///https://docs.microsoft.com/pl-pl/ef/core/
-				db.Localizations.Clear();
-			}
-
-			using (var db = new LocalizationContext())
-			{
-				db.Localizations.AddRange(itemsRawXml2.Localizations);
-				db.SaveChanges();
-
-				var a = db.Localizations;
-			}
+			UpdateDataBase.UpDataBase();
 		}
 
 		public static void Hauling()

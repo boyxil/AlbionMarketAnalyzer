@@ -16,5 +16,6 @@ namespace AlbionMarket.Model.DBContext
 
 		public LocalizationContext() : base() { }
 		public DbSet<Localization> Localizations { get; set; }
+		public DbSet<ItemRawXml> Items { get; set; }
 	}
 }

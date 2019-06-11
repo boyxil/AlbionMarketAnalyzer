@@ -34,6 +34,32 @@ namespace AlbionMarket.Migrations
                     b.ToTable("Description");
                 });
 
+            modelBuilder.Entity("AlbionMarket.Model.ItemRawXml", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Kind");
+
+                    b.Property<int>("MaxStackSize");
+
+                    b.Property<string>("ShopCategory");
+
+                    b.Property<string>("ShopSubCategory");
+
+                    b.Property<int>("Tier");
+
+                    b.Property<string>("UniqueName");
+
+                    b.Property<bool>("UnlockedToCraft");
+
+                    b.Property<string>("Weight");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
+                });
+
             modelBuilder.Entity("AlbionMarket.Model.Localization", b =>
                 {
                     b.Property<int>("Id")

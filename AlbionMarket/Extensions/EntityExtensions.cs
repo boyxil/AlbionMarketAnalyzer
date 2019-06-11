@@ -9,7 +9,8 @@ namespace AlbionMarket.Extensions
 	{
 		public static void Clear<T>(this DbSet<T> dbSet) where T : class
 		{
-			dbSet.RemoveRange(dbSet);
+			if(dbSet.Local.Count != 0)
+				dbSet.RemoveRange(dbSet);
 		}
 	}
 }

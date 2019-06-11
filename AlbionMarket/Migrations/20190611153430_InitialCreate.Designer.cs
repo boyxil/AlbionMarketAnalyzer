@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbionMarket.Migrations
 {
     [DbContext(typeof(LocalizationContext))]
-    [Migration("20190610152029_InitialCreate")]
+    [Migration("20190611153430_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,32 @@ namespace AlbionMarket.Migrations
                     b.HasIndex("LocalizationId");
 
                     b.ToTable("Description");
+                });
+
+            modelBuilder.Entity("AlbionMarket.Model.ItemRawXml", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Kind");
+
+                    b.Property<int>("MaxStackSize");
+
+                    b.Property<string>("ShopCategory");
+
+                    b.Property<string>("ShopSubCategory");
+
+                    b.Property<int>("Tier");
+
+                    b.Property<string>("UniqueName");
+
+                    b.Property<bool>("UnlockedToCraft");
+
+                    b.Property<string>("Weight");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("AlbionMarket.Model.Localization", b =>

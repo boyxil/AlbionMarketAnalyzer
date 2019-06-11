@@ -7,6 +7,26 @@ namespace AlbionMarket.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UniqueName = table.Column<string>(nullable: true),
+                    ShopCategory = table.Column<string>(nullable: true),
+                    ShopSubCategory = table.Column<string>(nullable: true),
+                    Kind = table.Column<string>(nullable: true),
+                    Weight = table.Column<string>(nullable: true),
+                    MaxStackSize = table.Column<int>(nullable: false),
+                    Tier = table.Column<int>(nullable: false),
+                    UnlockedToCraft = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Localizations",
                 columns: table => new
                 {
@@ -50,6 +70,9 @@ namespace AlbionMarket.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Description");
+
+            migrationBuilder.DropTable(
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Localizations");

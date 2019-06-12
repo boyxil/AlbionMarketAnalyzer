@@ -19,7 +19,7 @@ namespace AlbionMarket
 
 		public static IEnumerable<Item> GetItems(Location[] locations = null, ItemTire[] expectTirs = null, string[] expectEnchantemts = null)
 		{
-			var itemsNames = GetItemsNames("JsonFiles/ItemsOfInterest2.json");
+			var itemsNames = GetItemsNames("JsonFiles/ItemsOfInterest.json");
 			var rawItems = GetRawItems(itemsNames, expectTirs, expectEnchantemts);
 			var itemsPrices = AlbionDataProjectRestApi.GetItemPrices(rawItems.Select(e => e.UniqueName).ToArray(), locations);
 			return AggregateItems(rawItems, itemsPrices);
@@ -73,7 +73,7 @@ namespace AlbionMarket
 			{
 				result.Add(new Item
 				{
-					Name = itemsRawJson.Single(e => e.UniqueName.Equals(itemPrice.UniqueName))
+					Name = itemsRawJson.First(e => e.UniqueName.Equals(itemPrice.UniqueName))
 							.LocalizedNames.First(a => a.Key.Equals("EN-US")).Value,
 					Locations = itemPrice.Location,
 					UniqueName = itemPrice.UniqueName,

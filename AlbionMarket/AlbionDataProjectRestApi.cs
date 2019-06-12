@@ -30,7 +30,7 @@ namespace AlbionMarket {
 		/// <returns>Json</returns>
 		public static string GetPrices(string[] items, Location[] locations = null)
 		{
-			if (items?.Length > 300)
+			if (items?.Length > 250)
 				throw new Exception("To many items in a request");
 
 			string url = "https://www.albion-online-data.com/api/v1/stats/Prices/{0}?locations={1}";
@@ -50,14 +50,20 @@ namespace AlbionMarket {
 		/// <summary>
 		/// Get a objects which represents a item prices
 		/// </summary>
-		/// <param name="items">Array of items that we are searching for (maximum 300 intems)</param>
+		/// <param name="items">Array of items that we are searching for (maximum 250 intems)</param>
 		/// <param name="locations">Array of locations that we are searching for</param>
 		/// <returns>IEnumerable of ItemPrcieJson</returns>
 		public static IEnumerable<ItemPriceJson> GetItemPrices(IEnumerable<string> items, IEnumerable<Location> locations = null)
 		{
-			string response = GetPrices(items.ToArray(), locations.ToArray());
-			var itemPrices = JsonConvert.DeserializeObject<List<ItemPriceJson>>(response, new ItemPriceJsonConverter());
-			return itemPrices;
+			int iterations = (int)Math.Ceiling(items.Count() / 250M);
+			List<ItemPriceJson> results = new List<ItemPriceJson>();
+			for (int i = 0; i < iterations; i++)
+			{
+				var partOfItems = items.Skip(250 * i).Take(250);
+				string response = GetPrices(partOfItems.ToArray(), locations.ToArray());
+				results.AddRange(JsonConvert.DeserializeObject<List<ItemPriceJson>>(response, new ItemPriceJsonConverter()));
+			}
+			return results;
 		}
 
 		/// <summary>

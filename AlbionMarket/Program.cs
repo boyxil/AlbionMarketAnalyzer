@@ -16,13 +16,13 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			var quary = AlbionContext.GetItemsWithDescription();
+			//var quary = AlbionContext.GetItemsWithDescription();
 
-			foreach (var item in quary)
-			{
-				Console.WriteLine(item.item.UniqueName, item.localization.Descriptions[0]);
-			}
-
+			//foreach (var item in quary)
+			//{
+			//	Console.WriteLine(item.item.UniqueName, item.localization.Descriptions[0]);
+			//}
+			ItemsToBuy();
 		}
 
 		public static void Hauling()
@@ -63,9 +63,9 @@ namespace AlbionMarket
 		{
 			var location = new Location[] { Location.Caerleon };
 			var expectTires = new ItemTire[] { ItemTire.T1, ItemTire.T2, ItemTire.T3 };
-			var expectEnchantment = new string[] { "2", "3" };
+			var expectEnchantment = new string[] { "1","2","3" };
 			var items = ItemsBuilder.GetItems(location, expectTires, expectEnchantment);
-			items = items.OrderByDescending(e => e.Revenue).Where(b => b.Revenue < 90).Take(20);
+			items = items.OrderByDescending(e => e.Revenue)/*Where(b => b.Revenue < 90)*/.Take(30);
 			foreach (var item in items)
 				Console.WriteLine($"{item.Name} ID: {item.UniqueName} Sell: {item.SellPrice}  Buy: {item.BuyPrice}, Revenue {item.Revenue}");
 		}

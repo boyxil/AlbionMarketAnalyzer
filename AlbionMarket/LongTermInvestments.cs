@@ -13,7 +13,7 @@ namespace AlbionMarket {
 
 		public static void Run(Location location, DateTime date, int days = 7)
 		{
-			var items = ItemsBuilder.GetRawItems(ItemsBuilder.GetItemsNames("JsonFiles/ItemsOfInterest2.json"));
+			var items = ItemsBuilder.GetRawItems(ItemsBuilder.GetItemsNames("JsonFiles/ItemsOfInterest.json"));
 			List<dynamic> listOfItems = new List<dynamic>();
 
 			foreach (var item in items)

@@ -30,34 +30,34 @@ namespace AlbionMarket.Migrations
                 name: "Localizations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    LocalizationId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UniqueName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Localizations", x => x.Id);
+                    table.PrimaryKey("PK_Localizations", x => x.LocalizationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Description",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    DescriptionId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Language = table.Column<string>(nullable: true),
                     DescriptionText = table.Column<string>(nullable: true),
-                    LocalizationId = table.Column<int>(nullable: true)
+                    LocalizationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Description", x => x.Id);
+                    table.PrimaryKey("PK_Description", x => x.DescriptionId);
                     table.ForeignKey(
                         name: "FK_Description_Localizations_LocalizationId",
                         column: x => x.LocalizationId,
                         principalTable: "Localizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "LocalizationId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

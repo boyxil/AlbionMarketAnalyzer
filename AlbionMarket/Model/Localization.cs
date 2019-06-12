@@ -12,7 +12,7 @@ namespace AlbionMarket.Model
 	public class Localization
 	{
 		[Key]
-		public int Id { get; set; }
+		public int LocalizationId { get; set; }
 		[XmlAttribute("tuid")]
 		public string UniqueName { get; set; }
 		[XmlArrayItem("tuv")]
@@ -22,11 +22,13 @@ namespace AlbionMarket.Model
 	[XmlRoot("tuv")]
 	public class Description
 	{
-		[Key]
-		public int Id { get; set; }
+		public int DescriptionId { get; set; }
 		[XmlAttribute("xml:lang")]
 		public string Language { get; set; }
 		[XmlElement("seg")]
 		public string DescriptionText { get; set; }
+
+		public int LocalizationId { get; set; }
+		public Localization Localization { get; set; }
 	}
 }

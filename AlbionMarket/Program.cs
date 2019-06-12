@@ -16,9 +16,13 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			//ItemsToBuy();
-			//LongTermInvestments.Run(Location.Caerleon, DateTime.Now- TimeSpan.FromDays(1));
-			UpdateDataBase.UpDataBase();
+			var quary = AlbionContext.GetItemsWithDescription();
+
+			foreach (var item in quary)
+			{
+				Console.WriteLine(item.item.UniqueName, item.localization.Descriptions[0]);
+			}
+
 		}
 
 		public static void Hauling()

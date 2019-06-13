@@ -3,12 +3,7 @@ using AlbionMarket.Model;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml.Linq;
 using AlbionMarket.Model.DBContext;
-using Microsoft.EntityFrameworkCore;
-using AlbionMarket.Extensions;
 
 namespace AlbionMarket
 {
@@ -16,19 +11,14 @@ namespace AlbionMarket
 	{
 		static void Main(string[] args)
 		{
-			//var quary = AlbionContext.GetItemsWithDescription();
+			Hauling.Run();
+			//var quary = AlbionContext.GetItemsWithDescription("JsonFiles/ItemsOfInterest.json");
 
 			//foreach (var item in quary)
 			//{
-			//	Console.WriteLine(item.item.UniqueName, item.localization.Descriptions[0]);
+			//	Console.WriteLine(item.item.UniqueName + "  " + item.localization.Descriptions[0].DescriptionText);
 			//}
-			ItemsToBuy();
-		}
-
-		public static void Hauling()
-		{
-			var location = new Location[] { Location.BlackMarket, Location.Caerleon };
-			var items = ItemsBuilder.GetItems(location);
+			//ItemsToBuy();
 		}
 
 		public static void BlackMarketRevenue()

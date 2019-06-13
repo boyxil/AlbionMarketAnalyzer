@@ -28,6 +28,20 @@ namespace AlbionMarket.Model.DBContext
 			}
 		}
 
+		public static dynamic GetItemsWithDescription(string name)
+		{
+			using (var db = new AlbionContext())
+			{
+				var query = from item in db.Items
+							join localization in db.Localizations.Include(d => d.Descriptions)
+							on ("@ITEMS_" + item.UniqueName) equals localization.UniqueName
+							where localization.Descriptions[0].DescriptionText.Contains(name)
+							select new { item, localization };
+
+				return query.ToArray();
+			}
+		}
+
 		public static void UpDataBase()
 		{
 			var localizations = ConvertFileContentToObject<LocalizationXmls>("XmlFiles/localization.xml");

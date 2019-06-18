@@ -12,7 +12,7 @@ namespace AlbionMarket
 		{
 			var items = ItemsBuilder.GetItemsNames("JsonFiles/ItemsOfInterest.json").ToList();
 			var items2 = new string[] { "Scholar Robe", "Cleric Robe" };
-				var a = AlbionContext.GetItemsWithDescription(items2.ToArray());
+				var a = AlbionContext.GetItemsWithDescription(items.ToArray());
 				foreach (var b in a)
 				{
 					Console.WriteLine(b.item.UniqueName + "  " + b.localization.Descriptions[0].DescriptionText);

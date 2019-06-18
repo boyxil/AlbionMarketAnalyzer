@@ -28,31 +28,20 @@ namespace AlbionMarket.Model.DBContext
 			}
 		}
 
-		public static dynamic GetItemsWithDescription(string[] name)
+		public dynamic GetItemsWithDescription(string[] name)
 		{
 			using (var db = new AlbionContext())
 			{
+				var descriptions = from description in db.Description
+									 where name.Any(c => description.DescriptionText.Contains(c))
+									 select description;
 
-				var query = from description in db.Description
-							where name.Any(c => description.DescriptionText.Contains(c))
-							//join localization in db.Localizations.Include(d => d.Descriptions)
-							//on description.LocalizationId equals localization.LocalizationId
-							//join item in db.Items
-							//on localization.UniqueName equals ("@ITEMS_" + item.UniqueName)
-							select description;
-
-				foreach (var item in query)
-					Console.WriteLine(item.DescriptionText);
-
-
-
-				//var query = from item in db.Items
-				//			join localization in db.Localizations.Include(d => d.Descriptions)
-				//			on ("@ITEMS_" + item.UniqueName) equals localization.UniqueName
-				//			where localization.Descriptions[0].DescriptionText.Contains(name)
-				//			select new { item, localization };
-
-				return query.ToArray();
+				var items = from localization in db.Localizations.Include(l => l.Descriptions)
+							where descriptions.Any(c => c.LocalizationId == localization.LocalizationId)
+							join item in db.Items
+							on localization.UniqueName equals ("@ITEMS_" + item.UniqueName)
+							select new { localization, item};
+				return null;
 			}
 		}
 

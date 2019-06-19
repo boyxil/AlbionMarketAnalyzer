@@ -47,6 +47,9 @@ namespace AlbionMarket {
 			return client.GetStringAsync(url).Result;
 		}
 
+		public static IEnumerable<ItemPriceJson> GetItemPrices(IEnumerable<string> items, Location locations) =>
+			GetItemPrices(items, new Location[] { locations });
+
 		/// <summary>
 		/// Get a objects which represents a item prices
 		/// </summary>

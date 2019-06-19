@@ -27,4 +27,15 @@ namespace AlbionMarket.Model
 		Bridgewatch,
 		Martlock,
 	}
+
+	public enum Languages
+	{
+		US,
+		DE,
+		FR,
+		RU,
+		PL,
+		ES,
+		PT,
+	}
 }

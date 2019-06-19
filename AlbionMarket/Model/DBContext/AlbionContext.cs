@@ -10,39 +10,28 @@ namespace AlbionMarket.Model.DBContext
 {
 	public class AlbionContext : DbContext
 	{
+		public DbSet<Localization> Localizations { get; set; }
+		public DbSet<ItemRawXml> Items { get; set; }
+		public DbSet<Description> Description { get; set; }
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlite("Data Source=albion.db");
 		}
 
-		public static dynamic GetItemsWithDescription()
+		public DataEntity<ItemRawXml>[] GetItemsWithDescription(string[] name)
 		{
-			using (var db = new AlbionContext())
-			{
-				var query = from item in db.Items
-				join localization in db.Localizations.Include(d => d.Descriptions)
-				on ("@ITEMS_" + item.UniqueName) equals localization.UniqueName
-				select new { item, localization };
+			var descriptions = from description in Description
+							   where name.Any(c => description.DescriptionText.Contains(c))
+							   select description;
 
-				return query.ToArray();
-			}
-		}
+			var items = from localization in Localizations.Include(l => l.Descriptions)
+						where descriptions.Any(c => c.LocalizationId == localization.LocalizationId)
+						join item in Items
+						on localization.UniqueName equals ("@ITEMS_" + item.UniqueName)
+						select new DataEntity<ItemRawXml>(item, localization);
 
-		public dynamic GetItemsWithDescription(string[] name)
-		{
-			using (var db = new AlbionContext())
-			{
-				var descriptions = from description in db.Description
-									 where name.Any(c => description.DescriptionText.Contains(c))
-									 select description;
-
-				var items = from localization in db.Localizations.Include(l => l.Descriptions)
-							where descriptions.Any(c => c.LocalizationId == localization.LocalizationId)
-							join item in db.Items
-							on localization.UniqueName equals ("@ITEMS_" + item.UniqueName)
-							select new { localization, item};
-				return null;
-			}
+			return items.ToArray();
 		}
 
 		public static void UpDataBase()
@@ -68,9 +57,5 @@ namespace AlbionMarket.Model.DBContext
 		public AlbionContext(DbContextOptions options): base(options) { }
 
 		public AlbionContext() : base() { }
-		public DbSet<Localization> Localizations { get; set; }
-		public DbSet<ItemRawXml> Items { get; set; }
-
-		public DbSet<Description> Description { get; set; }
 	}
 }

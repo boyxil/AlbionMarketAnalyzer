@@ -12,13 +12,6 @@ namespace AlbionMarket
 		static void Main(string[] args)
 		{
 			Hauling.Run();
-			//var quary = AlbionContext.GetItemsWithDescription("JsonFiles/ItemsOfInterest.json");
-
-			//foreach (var item in quary)
-			//{
-			//	Console.WriteLine(item.item.UniqueName + "  " + item.localization.Descriptions[0].DescriptionText);
-			//}
-			//ItemsToBuy();
 		}
 
 		public static void BlackMarketRevenue()

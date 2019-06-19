@@ -17,6 +17,9 @@ namespace AlbionMarket.Model
 		public string UniqueName { get; set; }
 		[XmlArrayItem("tuv")]
 		public List<Description> Descriptions { get; set; }
+
+		public Description GetDescription(Languages language) =>
+			Descriptions.Single(d => d.Language.Contains(language.ToString()));
 	}
 
 	[XmlRoot("tuv")]
@@ -27,7 +30,6 @@ namespace AlbionMarket.Model
 		public string Language { get; set; }
 		[XmlElement("seg")]
 		public string DescriptionText { get; set; }
-
 		public int LocalizationId { get; set; }
 		public Localization Localization { get; set; }
 	}
